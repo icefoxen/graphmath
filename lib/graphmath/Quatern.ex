@@ -578,6 +578,23 @@ defmodule Graphmath.Quatern do
   It returns a `Vec3` of `v` having undergone the rotation represented by `q`.
   """
   @spec transform_vector(quatern, vec3) :: vec3
+  def transform_vector({qw, qx, qy, qz}, {vx, vy, vz}) 
+    when is_number(qw) and is_number(qx) and is_number(qy) and is_number(qz) and
+         is_number(vx) and is_number(vy) and is_number(vz) do
+    # v' = qvq', but we'll use the rediscovered formula of rodrigues answer from SO ( https://gamedev.stackexchange.com/a/50545 )
+
+    dot_uv = qx * vx + qy * vy + qz * vz
+    two_dot_uv = 2.0 * dot_uv
+    dot_uu = qx * qx + qy * qy + qz * qz
+    v_scalar = qw * qw - dot_uu
+    two_qw = 2.0 * qw
+
+    {
+      two_dot_uv * qx + v_scalar * vx + two_qw * (qy * vz - qz * vy),
+      two_dot_uv * qy + v_scalar * vy + two_qw * (qz * vx - qx * vz),
+      two_dot_uv * qz + v_scalar * vz + two_qw * (qx * vy - qy * vx)
+    }
+  end
   def transform_vector({qw, qx, qy, qz}, {vx, vy, vz}) do
     # v' = qvq', but we'll use the rediscovered formula of rodrigues answer from SO ( https://gamedev.stackexchange.com/a/50545 )
 

@@ -41,14 +41,25 @@ defmodule Graphmath.Mat44 do
   This returns a `mat44` which is the element-wise sum of `a` and `b`.
   """
   @spec add(mat44, mat44) :: mat44
-  def add(a, b) do
-    {a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44} = a
-
-    {b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44} = b
-
+  def add({a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44}, 
+          {b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44})
+    when is_number(a11) and is_number(a12) and is_number(a13) and is_number(a14) and
+         is_number(a21) and is_number(a22) and is_number(a23) and is_number(a24) and
+         is_number(a31) and is_number(a32) and is_number(a33) and is_number(a34) and
+         is_number(a41) and is_number(a42) and is_number(a43) and is_number(a44) and
+         is_number(b11) and is_number(b12) and is_number(b13) and is_number(b14) and
+         is_number(b21) and is_number(b22) and is_number(b23) and is_number(b24) and
+         is_number(b31) and is_number(b32) and is_number(b33) and is_number(b34) and
+         is_number(b41) and is_number(b42) and is_number(b43) and is_number(b44) do  
     {a11 + b11, a12 + b12, a13 + b13, a14 + b14, a21 + b21, a22 + b22, a23 + b23, a24 + b24,
      a31 + b31, a32 + b32, a33 + b33, a34 + b34, a41 + b41, a42 + b42, a43 + b43, a44 + b44}
   end
+  def add({a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44}, 
+          {b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44}) do
+    {a11 + b11, a12 + b12, a13 + b13, a14 + b14, a21 + b21, a22 + b22, a23 + b23, a24 + b24,
+     a31 + b31, a32 + b32, a33 + b33, a34 + b34, a41 + b41, a42 + b42, a43 + b43, a44 + b44}
+  end
+
 
   @doc """
   `subtract(a,b)` subtracts one `mat44` from another `mat44`.
@@ -224,11 +235,38 @@ defmodule Graphmath.Mat44 do
   This returns the `mat44` product of the `a` and `b`.
   """
   @spec multiply(mat44, mat44) :: mat44
-  def multiply(a, b) do
-    {a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44} = a
+  def multiply({a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44}, 
+          {b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44})
+    when is_number(a11) and is_number(a12) and is_number(a13) and is_number(a14) and
+         is_number(a21) and is_number(a22) and is_number(a23) and is_number(a24) and
+         is_number(a31) and is_number(a32) and is_number(a33) and is_number(a34) and
+         is_number(a41) and is_number(a42) and is_number(a43) and is_number(a44) and
+         is_number(b11) and is_number(b12) and is_number(b13) and is_number(b14) and
+         is_number(b21) and is_number(b22) and is_number(b23) and is_number(b24) and
+         is_number(b31) and is_number(b32) and is_number(b33) and is_number(b34) and
+         is_number(b41) and is_number(b42) and is_number(b43) and is_number(b44) do   
+    {
+      a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41,
+      a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42,
+      a11 * b13 + a12 * b23 + a13 * b33 + a14 * b43,
+      a11 * b14 + a12 * b24 + a13 * b34 + a14 * b44,
+      a21 * b11 + a22 * b21 + a23 * b31 + a24 * b41,
+      a21 * b12 + a22 * b22 + a23 * b32 + a24 * b42,
+      a21 * b13 + a22 * b23 + a23 * b33 + a24 * b43,
+      a21 * b14 + a22 * b24 + a23 * b34 + a24 * b44,
+      a31 * b11 + a32 * b21 + a33 * b31 + a34 * b41,
+      a31 * b12 + a32 * b22 + a33 * b32 + a34 * b42,
+      a31 * b13 + a32 * b23 + a33 * b33 + a34 * b43,
+      a31 * b14 + a32 * b24 + a33 * b34 + a34 * b44,
+      a41 * b11 + a42 * b21 + a43 * b31 + a44 * b41,
+      a41 * b12 + a42 * b22 + a43 * b32 + a44 * b42,
+      a41 * b13 + a42 * b23 + a43 * b33 + a44 * b43,
+      a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44
+    }
+  end
 
-    {b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44} = b
-
+  def multiply({a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44}, 
+          {b11, b12, b13, b14, b21, b22, b23, b24, b31, b32, b33, b34, b41, b42, b43, b44}) do
     {
       a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41,
       a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42,
@@ -566,11 +604,20 @@ defmodule Graphmath.Mat44 do
   Note that transforming a vector will work for only rotations, scales, and shears.
   """
   @spec transform_vector(mat44, vec3) :: vec3
-  def transform_vector(a, v) do
-    {a11, a21, a31, _, a12, a22, a32, _, a13, a23, a33, _, _, _, _, _} = a
+  def transform_vector({a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44}, {x, y, z})
+    when is_number(a11) and is_number(a12) and is_number(a13) and is_number(a14) and
+         is_number(a21) and is_number(a22) and is_number(a23) and is_number(a24) and
+         is_number(a31) and is_number(a32) and is_number(a33) and is_number(a34) and
+         is_number(a41) and is_number(a42) and is_number(a43) and is_number(a44) and
+         is_number(x) and is_number(y) and is_number(z) do   
+    {
+      a11 * x + a12 * y + a13 * z,
+      a21 * x + a22 * y + a23 * z,
+      a31 * x + a32 * y + a33 * z
+    }
+  end
 
-    {x, y, z} = v
-
+  def transform_vector({a11, a12, a13, a14, a21, a22, a23, a24, a31, a32, a33, a34, a41, a42, a43, a44}, {x, y, z}) do
     {
       a11 * x + a12 * y + a13 * z,
       a21 * x + a22 * y + a23 * z,

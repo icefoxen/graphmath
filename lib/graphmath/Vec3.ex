@@ -58,9 +58,10 @@ defmodule Graphmath.Vec3 do
   It returns a `vec3` of the form { a<sub>x</sub> + b<sub>x</sub>, a<sub>y</sub> + b<sub>y</sub>, a<sub>z</sub> + b<sub>z</sub> }.
   """
   @spec add(vec3, vec3) :: vec3
-  def add(a, b) do
-    {x, y, z} = a
-    {u, v, w} = b
+  def add({x, y, z}, {u, v, w}) when is_number(x) and is_number(y) and is_number(z) and is_number(u) and is_number(v) and is_number(w) do
+    {x + u, y + v, z + w}
+  end
+  def add({x, y, z}, {u, v, w}) do
     {x + u, y + v, z + w}
   end
 
@@ -123,9 +124,10 @@ defmodule Graphmath.Vec3 do
   It returns a float of the value (a<sub>x</sub>b<sub>x</sub> + a<sub>y</sub>b<sub>y</sub> + a<sub>z</sub>b<sub>z</sub>).
   """
   @spec dot(vec3, vec3) :: float
-  def dot(a, b) do
-    {x, y, z} = a
-    {u, v, w} = b
+  def dot({x, y, z}, {u, v, w}) when is_number(x) and is_number(y) and is_number(z) and is_number(u) and is_number(v) and is_number(w) do
+    x * u + y * v + z * w
+  end
+  def dot({x, y, z}, {u, v, w}) do 
     x * u + y * v + z * w
   end
 
@@ -143,9 +145,7 @@ defmodule Graphmath.Vec3 do
 
   """
   @spec cross(vec3, vec3) :: vec3
-  def cross(a, b) do
-    {x, y, z} = a
-    {u, v, w} = b
+  def cross({x, y, z}, {u, v, w}) do
     {y * w - z * v, z * u - x * w, x * v - y * u}
   end
 
